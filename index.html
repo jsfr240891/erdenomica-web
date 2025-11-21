@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erde Nómica | Ingenieros Ambientales</title>
+    <!-- Carga de Tailwind CSS CDN para un diseño responsivo y moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Definición de la paleta de colores basada en el logo (verde y beige/crema) */
+        :root {
+            --color-primary: #00703C; /* Verde oscuro para acentos */
+            --color-secondary: #D4B27C; /* Beige/Dorado para acentos ligeros */
+            --color-background: #F8F8F0; /* Fondo crema muy suave */
+            --color-text: #2D3748; /* Gris oscuro para texto */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+        }
+
+        .text-erde-primary { color: var(--color-primary); }
+        .bg-erde-primary { background-color: var(--color-primary); }
+        .bg-erde-secondary { background-color: var(--color-secondary); }
+        .hover\:bg-erde-primary\:hover:bg-green-700 { background-color: var(--color-primary); } /* Tailwind utility for hover */
+
+        /* Estilo para el Hero Section con fondo de imagen (simulado) */
+        .hero-background {
+            background-image: url('https://placehold.co/1920x800/E9E9D8/00703C?text=Planta+de+Tratamiento+Industrial');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Efecto Parallax */
+        }
+        
+        /* Estilos personalizados para el logo/título basado en la tipografía del PDF */
+        .logo-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Utilidad para simular el ícono del logo con un SVG simple (Trifolio) */
+        .logo-icon {
+            color: var(--color-primary);
+        }
+
+        /* Estilo para iconos de servicios */
+        .service-icon {
+            background-color: var(--color-primary);
+            box-shadow: 0 4px 6px -1px rgba(0, 112, 60, 0.2), 0 2px 4px -2px rgba(0, 112, 60, 0.2);
+        }
+    </style>
+    <!-- Iconos de Lucide React, simulando el uso con SVG directo -->
+    <script>
+        // Función para inyectar iconos SVG simples (para simular lucide/fontawesome)
+        function getIcon(name, size = 24) {
+            const icons = {
+                // Iconos representativos de servicios ambientales/seguridad
+                'leaf': `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.2C17.7 2.1 22 4.9 22 8.5 22 12.1 18.5 15.5 15 17c-2.3 1.1-4.7 1.8-7.1 1.8A7 7 0 0 1 11 20z"></path><path d="M2 21L22 1"></path></svg>`,
+                'shield': `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`,
+                'checkCircle': `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="M9 11l3 3L22 4"></path></svg>`,
+                'globe': `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"></path><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 0 0 20"></path></svg>`,
+                'training': `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15z"></path><path d="M3 10V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"></path><path d="M3 14h18"></path><path d="M10 20h4"></path><path d="M12 14v6"></path></svg>`, // Simula un diploma/certificado
+                'phone': `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.67-2.65c-1.03-1.03-2-2.17-2.65-3.67A19.5 19.5 0 0 1 1.05 4.18 2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.73A17.9 17.9 0 0 1 8.89 8.63l-1.5 1.5a15.8 15.8 0 0 0 4.67 4.67l1.5-1.5a17.9 17.9 0 0 1 4.89 1.55 2 2 0 0 1 1.73 2z"></path></svg>`,
+                'mail': `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`,
+                'target': `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>`,
+            };
+            return icons[name] || '';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.icon-placeholder').forEach(el => {
+                const iconName = el.getAttribute('data-icon');
+                const iconSize = el.getAttribute('data-size') || 24;
+                el.innerHTML = getIcon(iconName, iconSize);
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Navegación Fija con Logo -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo/Marca -->
+            <div class="flex items-center space-x-2">
+                <div class="logo-icon w-8 h-8 hidden sm:block">
+                    <!-- Icono simple simulando el logo circular -->
+                    <svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                        <circle cx="50" cy="30" r="25" opacity="0.7"/>
+                        <circle cx="30" cy="70" r="25" opacity="0.7"/>
+                        <circle cx="70" cy="70" r="25" opacity="0.7"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="logo-title text-2xl sm:text-3xl text-erde-primary tracking-wider">ERDE NÓMICA</span>
+                    <span class="text-sm text-gray-600 font-normal mt-1">Ingenieros Ambientales</span>
+                </div>
+            </div>
+
+            <!-- Menú de Navegación (Responsive) -->
+            <nav class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="#inicio" class="text-gray-700 hover:text-erde-primary transition duration-300">Inicio</a>
+                <a href="#servicios" class="text-gray-700 hover:text-erde-primary transition duration-300">Servicios</a>
+                <a href="#sustentabilidad" class="text-gray-700 hover:text-erde-primary transition duration-300">Sustentabilidad</a>
+                <a href="#mision-vision" class="text-gray-700 hover:text-erde-primary transition duration-300">Misión / Visión</a>
+                <a href="#contacto" class="text-gray-700 hover:text-erde-primary transition duration-300">Contacto</a>
+            </nav>
+
+            <!-- Botón de Menú Móvil (Hamburguesa) - Funcionalidad JS simple -->
+            <button id="menu-button" class="md:hidden p-2 rounded-md text-erde-primary focus:outline-none focus:ring-2 focus:ring-erde-primary">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg py-2">
+            <a href="#inicio" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Inicio</a>
+            <a href="#servicios" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Servicios</a>
+            <a href="#sustentabilidad" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Sustentabilidad</a>
+            <a href="#mision-vision" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Misión / Visión</a>
+            <a href="#contacto" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Contacto</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- SECCIÓN 1: HERO / INICIO -->
+        <section id="inicio" class="hero-background min-h-[60vh] flex items-center justify-center p-4">
+            <div class="bg-black bg-opacity-50 p-8 md:p-12 rounded-xl text-center max-w-4xl border-4 border-erde-secondary shadow-2xl">
+                <h1 class="logo-title text-4xl sm:text-6xl text-white mb-4 leading-tight">
+                    ERDE NÓMICA
+                </h1>
+                <p class="text-xl sm:text-2xl text-white font-light italic mb-6">
+                    "Las normas de la Tierra..."
+                </p>
+                <h2 class="text-2xl sm:text-3xl font-semibold text-erde-secondary">
+                    Servicios Integrales de Consultoría Ambiental y Seguridad Industrial
+                </h2>
+                <a href="#servicios" class="mt-8 inline-block bg-erde-primary hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg">
+                    Conoce Nuestros Servicios
+                </a>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: SERVICIOS -->
+        <section id="servicios" class="py-16 md:py-24 px-4">
+            <div class="container mx-auto max-w-6xl">
+                <h2 class="text-4xl logo-title font-bold text-center text-erde-primary mb-12">Nuestros Servicios</h2>
+                <p class="text-center text-xl text-gray-700 mb-16 max-w-3xl mx-auto">
+                    Brindamos soluciones integrales de **Asesoría y Consultoría** para garantizar el cumplimiento legal y normativo de su empresa, fortaleciendo su competitividad.
+                </p>
+
+                <!-- Tarjetas de Servicios -->
+                <div class="grid md:grid-cols-3 gap-10">
+
+                    <!-- Tarjeta 1: Cumplimiento Legal y Normativo (EHS) -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-erde-primary">
+                        <div class="service-icon w-12 h-12 flex items-center justify-center rounded-full mb-4 text-white">
+                            <span class="icon-placeholder" data-icon="checkCircle" data-size="28"></span>
+                        </div>
+                        <h3 class="text-2xl font-semibold logo-title text-erde-primary mb-3">Cumplimiento Legal y Normativo (EHS)</h3>
+                        <p class="text-gray-600 mb-4">
+                            Gestión y aseguramiento del cumplimiento de las normas mexicanas e internacionales en materia Ambiental y de Seguridad Industrial (EHS).
+                        </p>
+                        <ul class="list-none space-y-2 text-sm text-gray-700">
+                            <li><span class="text-erde-primary font-bold mr-1">✓</span> Trámites, permisos y registros ante autoridades (SEGAM, SEMARNAT, PROFEPA, STPS, ASEA, SSA Y CNA).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tarjeta 2: Sistemas de Gestión (ISO) -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-erde-primary">
+                        <div class="service-icon w-12 h-12 flex items-center justify-center rounded-full mb-4 text-white">
+                            <span class="icon-placeholder" data-icon="globe" data-size="28"></span>
+                        </div>
+                        <h3 class="text-2xl font-semibold logo-title text-erde-primary mb-3">Sistemas de Gestión</h3>
+                        <p class="text-gray-600 mb-4">
+                            Asesoría para la implementación y certificación de Sistemas de Gestión que impulsan la mejora continua.
+                        </p>
+                        <ul class="list-none space-y-2 text-sm text-gray-700 font-medium">
+                            <li><span class="text-erde-primary font-bold mr-1">●</span> ISO 14001:2015 (Gestión Ambiental)</li>
+                            <li><span class="text-erde-primary font-bold mr-1">●</span> ISO 45001:2018 (Seguridad y Salud en el Trabajo)</li>
+                            <li><span class="text-erde-primary font-bold mr-1">●</span> ISO 9001:2015 (Gestión de Calidad)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tarjeta 3: Cursos y Capacitaciones -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border-t-4 border-erde-primary">
+                        <div class="service-icon w-12 h-12 flex items-center justify-center rounded-full mb-4 text-white">
+                            <span class="icon-placeholder" data-icon="training" data-size="28"></span>
+                        </div>
+                        <h3 class="text-2xl font-semibold logo-title text-erde-primary mb-3">Cursos y Capacitaciones</h3>
+                        <p class="text-gray-600 mb-4">
+                            Programas especializados para su equipo en cumplimiento de normatividad mexicana (NOMS, NMX) e internacional (ISO).
+                        </p>
+                        <ul class="list-none space-y-2 text-sm text-gray-700">
+                            <li><span class="text-erde-primary font-bold mr-1">→</span> Seguridad Industrial</li>
+                            <li><span class="text-erde-primary font-bold mr-1">→</span> Medio Ambiente</li>
+                            <li><span class="text-erde-primary font-bold mr-1">→</span> Sustentabilidad</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: SUSTENTABILIDAD CORPORATIVA -->
+        <section id="sustentabilidad" class="bg-erde-secondary/20 py-16 md:py-24 px-4">
+            <div class="container mx-auto max-w-6xl">
+                <h2 class="text-4xl logo-title font-bold text-center text-erde-primary mb-12">Desarrollo de Estrategias de Sustentabilidad Corporativa</h2>
+                <p class="text-center text-xl text-gray-700 mb-16 max-w-3xl mx-auto">
+                    Transformamos el compromiso ambiental en valor empresarial a través de la gestión estratégica y la innovación.
+                </p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Estrategia 1: Carbono Neutralidad -->
+                    <div class="text-center p-5 bg-white rounded-xl shadow-lg">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-erde-primary/80 rounded-full flex items-center justify-center text-white">
+                            <span class="text-3xl font-bold">CO₂</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Roadmaps "Net Zero"</h4>
+                        <p class="text-sm text-gray-600">Desarrollo de rutas claras hacia la neutralidad de carbono y reducción de emisiones.</p>
+                    </div>
+
+                    <!-- Estrategia 2: Indicadores Ambientales (KPIs) -->
+                    <div class="text-center p-5 bg-white rounded-xl shadow-lg">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-erde-primary/80 rounded-full flex items-center justify-center text-white">
+                            <span class="text-3xl font-bold">%</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Generación de KPIs</h4>
+                        <p class="text-sm text-gray-600">Creación de indicadores ambientales clave (KPIs) para una medición y reporte efectivo.</p>
+                    </div>
+
+                    <!-- Estrategia 3: Economía Circular -->
+                    <div class="text-center p-5 bg-white rounded-xl shadow-lg">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-erde-primary/80 rounded-full flex items-center justify-center text-white">
+                            <span class="icon-placeholder" data-icon="leaf" data-size="32"></span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Economía Circular</h4>
+                        <p class="text-sm text-gray-600">Asesoría para la inserción de modelos de negocio basados en la Economía Circular.</p>
+                    </div>
+
+                    <!-- Estrategia 4: Reducción de Emisiones -->
+                    <div class="text-center p-5 bg-white rounded-xl shadow-lg">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-erde-primary/80 rounded-full flex items-center justify-center text-white">
+                            <span class="icon-placeholder" data-icon="shield" data-size="32"></span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Proyectos de Mitigación</h4>
+                        <p class="text-sm text-gray-600">Implementación de proyectos concretos para la reducción de la huella ambiental.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: MISIÓN Y VISIÓN -->
+        <section id="mision-vision" class="py-16 md:py-24 px-4">
+            <div class="container mx-auto max-w-6xl">
+                <div class="grid md:grid-cols-2 gap-12">
+
+                    <!-- Misión -->
+                    <div class="p-8 rounded-xl shadow-2xl bg-white border-b-8 border-erde-secondary">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <span class="icon-placeholder text-erde-primary" data-icon="target" data-size="36"></span>
+                            <h3 class="text-3xl logo-title font-bold text-erde-primary">Misión</h3>
+                        </div>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Brindar soluciones integrales en consultoría ambiental y seguridad industrial que garanticen el cumplimiento legal de nuestros clientes y fortalezcan su competitividad, implementando **mejores prácticas, sistemas de gestión y desarrollo de estrategias**.
+                        </p>
+                    </div>
+
+                    <!-- Visión -->
+                    <div class="p-8 rounded-xl shadow-2xl bg-white border-b-8 border-erde-secondary">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <span class="icon-placeholder text-erde-primary" data-icon="globe" data-size="36"></span>
+                            <h3 class="text-3xl logo-title font-bold text-erde-primary">Visión</h3>
+                        </div>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Ser la **empresa mexicana líder** en servicios de consultoría, que impulse la mejora continua, la responsabilidad social, protección al ambiente, y el **desarrollo sostenible**.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: CONTACTO -->
+        <section id="contacto" class="bg-erde-primary text-white py-16 md:py-20 px-4">
+            <div class="container mx-auto max-w-4xl text-center">
+                <h2 class="text-4xl logo-title font-bold mb-10">Contacto</h2>
+                <p class="text-xl mb-12 font-light">
+                    Estamos listos para impulsar el cumplimiento y la sustentabilidad de su proyecto.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    
+                    <!-- Contacto 1: Ing. Amhir Chávez Almazán -->
+                    <div class="bg-white text-gray-800 p-6 rounded-xl shadow-xl transition duration-300 hover:scale-[1.02]">
+                        <h4 class="text-xl font-semibold logo-title text-erde-primary mb-3">Ing. Amhir Chávez Almazán</h4>
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="icon-placeholder text-erde-primary" data-icon="phone" data-size="20"></span>
+                            <a href="tel:+524448507786" class="hover:underline">(+52) 4448507786</a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="icon-placeholder text-erde-primary" data-icon="mail" data-size="20"></span>
+                            <a href="mailto:amhir.chavez@gmail.com" class="hover:underline break-words">amhir.chavez@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <!-- Contacto 2: M.C. Salvador Fernández R. -->
+                    <div class="bg-white text-gray-800 p-6 rounded-xl shadow-xl transition duration-300 hover:scale-[1.02]">
+                        <h4 class="text-xl font-semibold logo-title text-erde-primary mb-3">M.C. Salvador Fernández R.</h4>
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="icon-placeholder text-erde-primary" data-icon="phone" data-size="20"></span>
+                            <a href="tel:+524445168324" class="hover:underline">(+52) 4445168324</a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="icon-placeholder text-erde-primary" data-icon="mail" data-size="20"></span>
+                            <a href="mailto:salvador.fdz.2491@gmail.com" class="hover:underline break-words">salvador.fdz.2491@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center text-sm">
+            &copy; 2025 Erde Nómica. Todos los derechos reservados.
+            <p class="mt-1 text-gray-400">Ingenieros Ambientales.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript para el Menú Móvil -->
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>
